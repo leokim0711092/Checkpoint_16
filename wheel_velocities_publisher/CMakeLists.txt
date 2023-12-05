@@ -8,6 +8,8 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -20,5 +22,16 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+add_executable(wheel_velocities_publisher src/wheel_velocities_publisher.cpp)
+ament_target_dependencies(wheel_velocities_publisher
+  "rclcpp"
+  "std_msgs"
+  )
+
+install(TARGETS
+  wheel_velocities_publisher
+  DESTINATION lib/${PROJECT_NAME})
+
 
 ament_package()
