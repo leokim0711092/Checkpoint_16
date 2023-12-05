@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -23,6 +24,16 @@ if(BUILD_TESTING)
 endif()
 
 
+add_executable(kinematic_model src/kinematic_model.cpp)
+ament_target_dependencies(kinematic_model
+  "rclcpp"
+  "std_msgs"
+  "geometry_msgs"
+  )
+
+install(TARGETS
+  kinematic_model
+  DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY
   launch
