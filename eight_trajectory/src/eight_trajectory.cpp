@@ -42,8 +42,7 @@ private:
   void execute(){
 
     rclcpp::Rate r(5);
-    motions_ = { {0.0, 1, -1} , {0.0, 1, 1}, {0.0, 1, 1}, {1.5708, 1, -1}, {-3.1415, -1, -1},  {0, -1, 1}, {0.0, -1, 1}, {1.5708, -1, -1} };
-
+    motions_ = { {0.0, 1, -1}, {0.0, 1, 1}, {0.0, 1, 1}, {1.5708, 1, -1}, {-3.1415, -1, -1}, {0, -1, 1}, {0.0, -1, 1}, {1.5708, -1, -1} }; 
 
     int count = 0;
     bool pass_rad;
@@ -81,7 +80,7 @@ private:
 
         auto twist = velocity2twist(dphi, dx, dy);
 
-        if (x_diff < 0.40 || y_diff < 0.40 ) {
+        if (x_diff < 0.4 || y_diff < 0.4 ) {
 
             twist[1] *= 0.2;
             twist[2] *= 0.2;
@@ -141,7 +140,11 @@ private:
         pub_->publish(msg);
         r.sleep();
       }
-
+      for(int i = 0; i< 1;i++){
+          stop.data = {0, 0, 0, 0};
+          pub_->publish(stop);
+          r.sleep();
+      }
     }
 
     stop.data = {0, 0, 0, 0};
